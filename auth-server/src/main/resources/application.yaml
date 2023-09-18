@@ -1,7 +1,5 @@
 jwt:
   key:
-    public: classpath:app.pub
-    private: classpath:app.key
     id: bootiful
   persistence:
     password: password

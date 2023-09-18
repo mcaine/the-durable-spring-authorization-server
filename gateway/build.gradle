@@ -5,8 +5,8 @@ plugins {
 	id 'org.graalvm.buildtools.native' version '0.9.24'
 }
 
-group = 'bootiful'
-version = '0.0.1-SNAPSHOT'
+group = 'com.example'
+version = '0.0.11'
 
 java {
 	sourceCompatibility = '17'
@@ -37,3 +37,34 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+publishing {
+	repositories {
+		maven {
+			name = "GitHubPackages"
+			url = "https://maven.pkg.github.com/mcaine/the-durable-spring-authorization-server"
+			credentials {
+				username = System.getenv("GITHUB_ACTOR")
+				password = System.getenv("GITHUB_TOKEN")
+			}
+		}
+	}
+	publications {
+		maven(MavenPublication) {
+			groupId = 'org.mikeycaine.spring-auth-server'
+			artifactId = 'gateway'
+			version = '0.0.11'
+			from components.java
+
+			versionMapping {
+				usage('java-api') {
+					fromResolutionOf('runtimeClasspath')
+				}
+				usage('java-runtime') {
+					fromResolutionResult()
+				}
+			}
+		}
+	}
+}
+

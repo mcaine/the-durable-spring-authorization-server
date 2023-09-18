@@ -6,8 +6,8 @@ plugins {
 	id 'maven-publish'
 }
 
-group = 'com.example'
-version = '0.0.14'
+group = 'org.mikeycaine.spring-auth-server'
+version = '0.0.15'
 
 java {
 	sourceCompatibility = '17'
@@ -52,7 +52,8 @@ publishing {
 	}
 	publications {
 		maven(MavenPublication) {
-			groupId = 'org.mikeycaine.spring-auth-server'
+			artifact bootJar
+
 			artifactId = 'gateway'
 			from components.java
 

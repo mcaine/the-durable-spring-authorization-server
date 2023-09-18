@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.9'
+version = '0.0.10'
 
 java {
 	sourceCompatibility = '17'
@@ -42,7 +42,10 @@ publishing {
 		}
 	}
 	publications {
-		myLibrary(MavenPublication) {
+		maven(MavenPublication) {
+			groupId = 'org.mikeycaine.spring-auth-server'
+			artifactId = 'auth-server'
+			version = '0.0.10'
 			from components.java
 		}
 	}

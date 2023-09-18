@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.4'
+version = '0.0.5-SNAPSHOT'
 
 java {
 	sourceCompatibility = '17'
@@ -31,7 +31,7 @@ tasks.named('test') {
 }
 
 publishing {
-	repositories {
+	publications {
 		maven {
 			name = "GitHubPackages"
 			url = "https://maven.pkg.github.com/mcaine/the-durable-spring-authorization-server"

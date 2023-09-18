@@ -7,3 +7,4 @@ insert into customer (name,email) values ('Stéphane Nicoll' , 'sn@email.com');
 insert into customer (name,email) values ('Jürgen Hoeller' , 'jh@email.com');
 insert into customer (name,email) values ('Audrey Neveu' , 'an@email.com');
 insert into customer (name,email) values ('Yuxin Bae' , 'yb@email.com');
+insert into customer (name,email) values ('Mike Caine' , 'mc@email.com');

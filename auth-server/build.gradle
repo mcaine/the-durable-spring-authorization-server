@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.10'
+version = '0.0.11'
 
 java {
 	sourceCompatibility = '17'
@@ -45,8 +45,17 @@ publishing {
 		maven(MavenPublication) {
 			groupId = 'org.mikeycaine.spring-auth-server'
 			artifactId = 'auth-server'
-			version = '0.0.10'
+			version = '0.0.11'
 			from components.java
+
+			versionMapping {
+				usage('java-api') {
+					fromResolutionOf('runtimeClasspath')
+				}
+				usage('java-runtime') {
+					fromResolutionResult()
+				}
+			}
 		}
 	}
 }

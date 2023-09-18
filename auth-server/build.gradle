@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.example'
-version = '0.0.13'
+version = '0.0.14'
 
 java {
 	sourceCompatibility = '17'
@@ -42,9 +42,11 @@ publishing {
 	}
 	publications {
 		maven(MavenPublication) {
+			artifact bootJar
+
 			groupId = 'org.mikeycaine.spring-auth-server'
 			artifactId = 'auth-server'
-			version = '0.0.13'
+
 			from components.java
 
 			versionMapping {

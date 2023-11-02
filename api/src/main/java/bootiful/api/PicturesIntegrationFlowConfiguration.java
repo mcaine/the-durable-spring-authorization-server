@@ -12,26 +12,20 @@ import org.springframework.integration.json.ObjectToJsonTransformer;
 import org.springframework.messaging.MessageChannel;
 
 @Configuration
-class EmailRequestsIntegrationFlowConfiguration {
+class PicturesIntegrationFlowConfiguration {
 
-    private final String destinationName = "emails";
+    private final String ROUTING_KEY = "pictures";
 
     @Bean
-    IntegrationFlow emailRequestsIntegrationFlow(@Qualifier("emailRequests") MessageChannel requests, AmqpTemplate template) {
-        // <1>
-        var outboundAmqpAdapter = Amqp
-                .outboundAdapter(template)
-                .routingKey(this.destinationName);
+    IntegrationFlow picturesIntegrationFlow(@Qualifier("pictures") MessageChannel picturesChannel, AmqpTemplate rabbit) {
 
-        return IntegrationFlow
-                .from(requests)// <2>
-                .transform(new ObjectToJsonTransformer()) // <3>
-                .handle(outboundAmqpAdapter) // <4>
-                .get();
+        return IntegrationFlow.from(picturesChannel).handle(
+            Amqp.outboundAdapter(rabbit).routingKey(this.ROUTING_KEY)
+        ).get();
     }
 
     @Bean
-    DirectChannelSpec emailRequests() {
+    DirectChannelSpec pictures() {
         return MessageChannels.direct();
     }
 }

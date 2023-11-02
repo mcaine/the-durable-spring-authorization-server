@@ -1,5 +1,6 @@
 package bootiful.api;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,7 +20,7 @@ class EmailController {
 
     private final CustomerRepository repository;
 
-    EmailController(CustomerRepository repository, MessageChannel requests) {
+    EmailController(CustomerRepository repository, @Qualifier("emailRequests") MessageChannel requests) {
         this.requests = requests;
         this.repository = repository;
     }

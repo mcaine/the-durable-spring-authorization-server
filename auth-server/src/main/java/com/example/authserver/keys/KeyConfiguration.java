@@ -2,6 +2,7 @@ package com.example.authserver.keys;
 
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationEventPublisher;
@@ -19,14 +20,19 @@ import java.time.Instant;
 
 
 @Configuration
+@Slf4j
 class KeyConfiguration {
 
     @Bean
     ApplicationListener<ApplicationReadyEvent> applicationReadyListener(
             ApplicationEventPublisher publisher, RsaKeyPairRepository repository) {
         return event -> {
-            if (repository.findKeyPairs().isEmpty())
+            log.info("Looking for key pairs...");
+            log.info("Found " + repository.findKeyPairs().size() + " Key Pairs");
+            if (repository.findKeyPairs().isEmpty()) {
+                log.info("Requesting new Key Pair...");
                 publisher.publishEvent(new RsaKeyPairGenerationRequestEvent(Instant.now()));
+            }
         };
     }
 
@@ -34,7 +40,10 @@ class KeyConfiguration {
     @Bean
     ApplicationListener<RsaKeyPairGenerationRequestEvent> keyPairGenerationRequestListener(
             Keys keys, RsaKeyPairRepository repository, @Value("${jwt.key.id}") String keyId) {
-        return event -> repository.save(keys.generateKeyPair(keyId, event.getSource()));
+        return event -> {
+            log.info("Saving new Key Pair...");
+            repository.save(keys.generateKeyPair(keyId, event.getSource()));
+        };
     }
 
     @Bean
